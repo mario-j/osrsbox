@@ -1,1 +1,1 @@
-web: gunicorn osrsbox:app
+web: gunicorn app:app
