@@ -1,10 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\app",
-    "\\app\\static",
-    "\\app\\templates"
+    "\\db",
+    "\\Relationship",
+    "\\templates"
   ],
-  "SelectedNode": "\\app\\static",
+  "SelectedNode": "\\Relationship\\models.py",
   "PreviewInSolutionExplorer": false
 }
