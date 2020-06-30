@@ -15,6 +15,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
 			integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
 			crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
@@ -31,8 +32,10 @@
 					<div class="input-group-prepend">
 						<input type="submit" value="Search" button class="btn btn-outline-secondary" type="button"></button>
 					</div>
-					<input type="text" name="search" class="form-control" placeholder="Enter ToDoItem" aria-label=""
+					<input list="items" type="text" name="search" class="form-control" placeholder="Enter Item" aria-label=""
 						   aria-describedby="basic-addon1">
+					<datalist id="items">
+					</datalist>
 
 				</div>
 			</form>
@@ -81,3 +84,19 @@
 		</div>
 </body>
 </html>
+
+<script>
+$(document).ready(function(){
+	var name;
+	$.getJSON("https://www.osrsbox.com/osrsbox-db/items-complete.json", function(result){
+        $.each(result, function(i, field){
+			$.each(field, function(key, value){
+				if (key === "name")
+					name = value;
+				if (key === "tradeable_on_ge" && value === true)
+					$("#items").append("<option value='" + name + "'>");
+			});
+        });
+    });
+});
+</script>
