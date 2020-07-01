@@ -32,11 +32,9 @@
 					<div class="input-group-prepend">
 						<input type="submit" value="Search" button class="btn btn-outline-secondary" type="button"></button>
 					</div>
-					<input list="items" type="text" name="search" class="form-control" placeholder="Enter Item" aria-label=""
+					<input type="text" name="search" class="form-control" placeholder="Enter Item" aria-label=""
 						   aria-describedby="basic-addon1">
-					<datalist id="items">
-					</datalist>
-
+					
 				</div>
 			</form>
 		</div>
@@ -50,7 +48,13 @@
 						<input type="submit" value="Add Item" button class="btn btn-outline-secondary"
 							   type="button"></button>
 					</div>
-					<input type="text" name="todoitem" class="form-control" placeholder="Enter ToDoItem" aria-label=""
+					<input list="items" type="text" name="todoitem" class="form-control col-md-4 col-lg-4 col-xs-12" placeholder="Enter Item" aria-label=""
+						   aria-describedby="basic-addon1">
+					<datalist id="items">
+					</datalist>
+					<input type="text" name="itembuyprice" class="form-control col-md-4 col-lg-4 col-xs-12" placeholder="Enter Amount Bought For" aria-label=""
+						   aria-describedby="basic-addon1">
+					<input type="text" name="itemsellprice" class="form-control col-md-4 col-lg-4 col-xs-12" placeholder="Enter Amount Sold For" aria-label=""
 						   aria-describedby="basic-addon1">
 				</div>
 			</form>
