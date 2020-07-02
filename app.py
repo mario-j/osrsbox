@@ -2,16 +2,26 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy 
 
+from flask_script import Manager
+from flask_migrate import ( Migrate, MigrateCommand )
+
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db/todo.db'
 
 db = SQLAlchemy(app)
 
+migrate = Migrate(app, db)
+manager = Manager(app)
+
+manager.add_command('db', MigrateCommand)
+
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(200))
     complete = db.Column(db.Boolean)
+    buy = db.Column(db.Integer)
+    sell = db.Column(db.Integer)
 
 @app.route('/')
 def index():
@@ -22,7 +32,7 @@ def index():
 
 @app.route('/add', methods=['POST'])
 def add():
-    todo = Todo(text=request.form['todoitem'], complete=False)
+    todo = Todo(text=request.form['todoitem'], buy=request.form['itembuyprice'], sell=request.form['itemsellprice'], complete=False)
     db.session.add(todo)
     db.session.commit()
 
@@ -53,4 +63,5 @@ def delete(id):
     return redirect('/')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    manager.run()
+    # app.run(debug=True)

@@ -66,8 +66,8 @@
 				<ul class="list-group">
 					{% for todo in incomplete %}
 					<li class="list-group-item" style="font-size: 30pt">
-						{{ todo.text }} <a href="{{ url_for('complete', id=todo.id) }}" class="btn btn-success active" role="button"
-						 aria-pressed="true">Check</a>
+						{{ todo.text }} {{ todo.buy }} {{ todo.sell }}<a href="{{ url_for('complete', id=todo.id) }}" class="btn btn-success active" role="button"
+																		aria-pressed="true">Check</a>
 						<a href="{{ url_for('delete', id=todo.id) }}" class="btn btn-danger active" role="button"
 						   aria-pressed="true">Delete</a>
 					</li>
@@ -80,7 +80,7 @@
 					{% for todo in complete %}
 					<li class="list-group-item disabled" style="font-size: 30pt">
 						{{ todo.text }} <a href="{{ url_for('delete', id=todo.id) }}" class="btn btn-danger active" role="button"
-						 aria-pressed="true">Delete</a>
+																		 aria-pressed="true">Delete</a>
 					</li></li>
 					{% endfor %}
 				</ul>
