@@ -20,6 +20,7 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(200))
     complete = db.Column(db.Boolean)
+    quantity = db.Column(db.Integer)
     buy = db.Column(db.Integer)
     sell = db.Column(db.Integer)
 
@@ -32,7 +33,7 @@ def index():
 
 @app.route('/add', methods=['POST'])
 def add():
-    todo = Todo(text=request.form['todoitem'], buy=request.form['itembuyprice'], sell=request.form['itemsellprice'], complete=False)
+    todo = Todo(text=request.form['todoitem'], quantity=request.form['itemquantity'], buy=request.form['itembuyprice'], sell=request.form['itemsellprice'], complete=False)
     db.session.add(todo)
     db.session.commit()
 
