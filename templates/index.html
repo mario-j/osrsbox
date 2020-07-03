@@ -66,14 +66,31 @@
 				<h2>Incomplete Items</h2>
 
 				<ul class="list-group">
-					{% for todo in incomplete %}
-					<li class="list-group-item" style="font-size: 30pt">
-						{{ todo.text }} {{ todo.quantity }} {{ todo.buy }} {{ todo.sell }}<a href="{{ url_for('complete', id=todo.id) }}" class="btn btn-success active" role="button"
-																		aria-pressed="true">Check</a>
-						<a href="{{ url_for('delete', id=todo.id) }}" class="btn btn-danger active" role="button"
-						   aria-pressed="true">Delete</a>
-					</li>
-					{% endfor %}
+					<table>
+						<tr>
+							<th>Item</th>
+							<th>Quantity</th>
+							<th>Buy Price</th>
+							<th>Sell Price</th>
+							<th>Archive</th>
+							<th>Delete</th>
+						</tr>
+
+						{% for todo in incomplete %}
+						<tr>
+							<td>{{ todo.text }}</td>
+							<td>{{ todo.quantity }}</td>
+							<td>{{ todo.buy }}</td>
+							<td>{{ todo.sell}}</td>
+							<td>
+								<a href="{{ url_for('complete', id=todo.id) }}" class="btn btn-success active" role="button" aria-pressed="true">Check</a>
+							</td>
+							<td>
+								<a href="{{ url_for('delete', id=todo.id) }}" class="btn btn-danger active" role="button" aria-pressed="true">Delete</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</table>
 				</ul>
 
 
