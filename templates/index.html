@@ -24,9 +24,9 @@
 </head>
 <body>
 	<div class="container">
-		<h1>Todo List</h1>
+		<h1>Flip Tool</h1>
 		<div>
-			Look for a Todo Item:
+			Search for an item:
 			<form action="{{ url_for('search') }}" method="POST">
 				<div class="input-group mb-3">
 					<div class="input-group-prepend">
@@ -40,7 +40,7 @@
 		</div>
 
 		<div>
-			Add a new todo item:
+			Add a new item:
 			<form action="{{ url_for('add') }}" method="POST">
 				<div class="input-group mb-3">
 					<div class="input-group-prepend">
@@ -63,7 +63,7 @@
 
 
 			<div>
-				<h2>Incomplete Items</h2>
+				<h2>Logged Items</h2>
 
 				<ul class="list-group">
 					<table>
@@ -72,6 +72,7 @@
 							<th>Quantity</th>
 							<th>Buy Price</th>
 							<th>Sell Price</th>
+							<th>Profit</th>
 							<th>Archive</th>
 							<th>Delete</th>
 						</tr>
@@ -82,8 +83,9 @@
 							<td>{{ todo.quantity }}</td>
 							<td>{{ todo.buy }}</td>
 							<td>{{ todo.sell}}</td>
+							<td> {{ todo.sell - todo.buy }}</td>
 							<td>
-								<a href="{{ url_for('complete', id=todo.id) }}" class="btn btn-success active" role="button" aria-pressed="true">Check</a>
+								<a href="{{ url_for('complete', id=todo.id) }}" class="btn btn-success active" role="button" aria-pressed="true">Archive</a>
 							</td>
 							<td>
 								<a href="{{ url_for('delete', id=todo.id) }}" class="btn btn-danger active" role="button" aria-pressed="true">Delete</a>
@@ -94,7 +96,7 @@
 				</ul>
 
 
-				<h2>Completed Items</h2>
+				<h2>Archived Items</h2>
 				<ul class="list-group">
 					{% for todo in complete %}
 					<li class="list-group-item disabled" style="font-size: 30pt">
