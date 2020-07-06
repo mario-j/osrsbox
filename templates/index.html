@@ -46,7 +46,7 @@
 					<div class="input-group-prepend">
 
 						<input type="submit" value="Add Item" button class="btn btn-outline-secondary"
-							   type="button"></button>
+							   type="button" onclick="sumProfit()"></button>
 					</div>
 					<input list="items" type="text" name="todoitem" class="form-control col-md-3 col-lg-3 col-xs-12" placeholder="Enter Item" aria-label=""
 						   aria-describedby="basic-addon1">
@@ -61,6 +61,11 @@
 				</div>
 			</form>
 
+			<div>
+				<h2>
+					Total Profit: <span id="profit"></span>
+				</h2>
+			</div>
 
 			<div>
 				<h2>Logged Items</h2>
@@ -83,12 +88,12 @@
 							<td>{{ todo.quantity }}</td>
 							<td>{{ todo.buy }}</td>
 							<td>{{ todo.sell}}</td>
-							<td> {{ todo.sell - todo.buy }}</td>
+							<td class="profit"> {{ (todo.sell - todo.buy) * todo.quantity }}</td>
 							<td>
-								<a href="{{ url_for('complete', id=todo.id) }}" class="btn btn-success active" role="button" aria-pressed="true">Archive</a>
+								<a href="{{ url_for('complete', id=todo.id) }}" class="btn btn-success active" role="button" aria-pressed="true" onclick="sumProfit()">Archive</a>
 							</td>
 							<td>
-								<a href="{{ url_for('delete', id=todo.id) }}" class="btn btn-danger active" role="button" aria-pressed="true">Delete</a>
+								<a href="{{ url_for('delete', id=todo.id) }}" class="btn btn-danger active" role="button" aria-pressed="true" onclick="sumProfit()">Delete</a>
 							</td>
 						</tr>
 						{% endfor %}
@@ -101,7 +106,7 @@
 					{% for todo in complete %}
 					<li class="list-group-item disabled" style="font-size: 30pt">
 						{{ todo.text }} <a href="{{ url_for('delete', id=todo.id) }}" class="btn btn-danger active" role="button"
-																		 aria-pressed="true">Delete</a>
+																		 aria-pressed="true" onclick="sumProfit()">Delete</a>
 					</li></li>
 					{% endfor %}
 				</ul>
@@ -124,4 +129,22 @@ $(document).ready(function(){
         });
     });
 });
+</script>
+
+<script>
+function sumProfit() {
+	var sum = 0;
+	var profit = document.getElementById('profit')
+	// iterate through each td based on class and add the values
+	$(".profit").each(function() {
+		var value = $(this).text();
+		// add only if the value is number
+		if(!isNaN(value) && value.length != 0) {
+			sum += parseFloat(value);
+		}
+	});
+	$("#profit").html(sum.toString());
+};
+
+	window.onload = sumProfit();
 </script>
