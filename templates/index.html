@@ -17,59 +17,29 @@
 			crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-	<nav aria-label="breadcrumb">
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
-		</ol>
+
+
+		<nav class="navbar navbar-dark bg-dark">
+			<a class="navbar-brand" href="{{ url_for('index') }}">Home</a>
+			<form class="form-inline" action="{{ url_for('search') }}" method="POST">
+				<input class="form-control mr-sm-2" type="text" name="search" placeholder="Enter Item" aria-label="Search" aria-describedby="basic-addon1">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</form>
+		</nav>
 </head>
 <body>
+
 	<div class="container">
-		<h1>Flip Tool</h1>
+		<h1 class="text-center">Flip Tool</h1>
+
 		<div>
-			Search for an item:
-			<form action="{{ url_for('search') }}" method="POST">
-				<div class="input-group mb-3">
-					<div class="input-group-prepend">
-						<input type="submit" value="Search" button class="btn btn-outline-secondary" type="button"></button>
-					</div>
-					<input type="text" name="search" class="form-control" placeholder="Enter Item" aria-label=""
-						   aria-describedby="basic-addon1">
-					
-				</div>
-			</form>
+			<h2 class="text-center">
+				Total Profit: <span id="profit"></span>
+			</h2>
 		</div>
 
 		<div>
-			Add a new item:
-			<form action="{{ url_for('add') }}" method="POST">
-				<div class="input-group mb-3">
-					<div class="input-group-prepend">
-
-						<input type="submit" value="Add Item" button class="btn btn-outline-secondary"
-							   type="button" onclick="sumProfit()"></button>
-					</div>
-					<input list="items" type="text" name="todoitem" class="form-control col-md-3 col-lg-3 col-xs-12" placeholder="Enter Item" aria-label=""
-						   aria-describedby="basic-addon1">
-					<datalist id="items">
-					</datalist>
-					<input type="number" name="itemquantity" class="form-control col-md-3 col-lg-3 col-xs-12" placeholder="Number of Items" aria-label=""
-						   aria-describedby="basic-addon1">
-					<input type="number" name="itembuyprice" class="form-control col-md-3 col-lg-3 col-xs-12" placeholder="Buying Price" aria-label=""
-						   aria-describedby="basic-addon1">
-					<input type="number" name="itemsellprice" class="form-control col-md-3 col-lg-3 col-xs-12" placeholder="Selling price" aria-label=""
-						   aria-describedby="basic-addon1">
-				</div>
-			</form>
-
 			<div>
-				<h2>
-					Total Profit: <span id="profit"></span>
-				</h2>
-			</div>
-
-			<div>
-				<h2>Logged Items</h2>
-
 				<ul class="list-group">
 					<table>
 						<tr>
@@ -100,13 +70,32 @@
 					</table>
 				</ul>
 
+				<form action="{{ url_for('add') }}" method="POST">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+
+							<input type="submit" value="Add Item" button class="btn btn-outline-secondary"
+								   type="button" onclick="sumProfit()"></button>
+						</div>
+						<input list="items" type="text" name="todoitem" class="form-control col-md-3 col-lg-3 col-xs-12" placeholder="Enter Item" aria-label=""
+							   aria-describedby="basic-addon1">
+						<datalist id="items">
+						</datalist>
+						<input type="number" name="itemquantity" class="form-control col-md-3 col-lg-3 col-xs-12" placeholder="Number of Items" aria-label=""
+							   aria-describedby="basic-addon1">
+						<input type="number" name="itembuyprice" class="form-control col-md-3 col-lg-3 col-xs-12" placeholder="Buying Price" aria-label=""
+							   aria-describedby="basic-addon1">
+						<input type="number" name="itemsellprice" class="form-control col-md-3 col-lg-3 col-xs-12" placeholder="Selling price" aria-label=""
+							   aria-describedby="basic-addon1">
+					</div>
+				</form>
 
 				<h2>Archived Items</h2>
 				<ul class="list-group">
 					{% for todo in complete %}
 					<li class="list-group-item disabled" style="font-size: 30pt">
 						{{ todo.text }} <a href="{{ url_for('delete', id=todo.id) }}" class="btn btn-danger active" role="button"
-																		 aria-pressed="true" onclick="sumProfit()">Delete</a>
+						 aria-pressed="true" onclick="sumProfit()">Delete</a>
 					</li></li>
 					{% endfor %}
 				</ul>
