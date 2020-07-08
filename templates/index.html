@@ -28,6 +28,20 @@
 			box-shadow: 5px 4px 8px #888888;
 		}
 
+		#overlay {
+			position: fixed;
+			display: none;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: rgba(0,0,0,0.5);
+			z-index: 2;
+			cursor: pointer;
+		}
+
 	</style>
 
 	<nav class="navbar navbar-dark bg-dark">
@@ -80,39 +94,41 @@
 				</table>
 			</ul>
 		</div>
-		<div class="container gray-bg col-xs-12 col-md-6 col-lg-6" id="add-item-form">
-			<form action="{{ url_for('add') }}" method="POST">
-				<div class="form-group">
-					<label for="item-input">Item</label>
-					<input id="item-input" list="items" type="text" name="todoitem" class="form-control col-md-12 col-lg-12 col-xs-12" placeholder="Enter Item" aria-label=""
-							aria-describedby="basic-addon1">
-					<datalist id="items">
-					</datalist>
-				</div>
-				<div class="form-group">
-					<label for="quantity">Quantity</label>
-					<input id="quantity" type="number" name="itemquantity" class="form-control col-md-12 col-lg-12 col-xs-12" placeholder="Number of Items" aria-label=""
-							aria-describedby="basic-addon1">
-				</div>
-				<div class="form-group">
-					<label for="buy-price">Buying Price</label>
-					<input id="buy-price" type="number" name="itembuyprice" class="form-control col-md-12 col-lg-12 col-xs-12" placeholder="Buying Price" aria-label=""
-							aria-describedby="basic-addon1">
-				</div>
-				<div class="form-group">
-					<label for="sell-price">Selling Price</label>
-					<input id="sell-price" type="number" name="itemsellprice" class="form-control col-md-12 col-lg-12 col-xs-12" placeholder="Selling price" aria-label=""
-							aria-describedby="basic-addon1">
-				</div>
+		<div id="overlay" onclick="hideAddItem()">
+			<div class="container gray-bg col-xs-12 col-md-6 col-lg-6" id="add-item-form">
+				<form action="{{ url_for('add') }}" method="POST">
+					<div class="form-group">
+						<label for="item-input">Item</label>
+						<input id="item-input" list="items" type="text" name="todoitem" class="form-control col-md-12 col-lg-12 col-xs-12" placeholder="Enter Item" aria-label=""
+							   aria-describedby="basic-addon1">
+						<datalist id="items">
+						</datalist>
+					</div>
+					<div class="form-group">
+						<label for="quantity">Quantity</label>
+						<input id="quantity" type="number" name="itemquantity" class="form-control col-md-12 col-lg-12 col-xs-12" placeholder="Number of Items" aria-label=""
+							   aria-describedby="basic-addon1">
+					</div>
+					<div class="form-group">
+						<label for="buy-price">Buying Price</label>
+						<input id="buy-price" type="number" name="itembuyprice" class="form-control col-md-12 col-lg-12 col-xs-12" placeholder="Buying Price" aria-label=""
+							   aria-describedby="basic-addon1">
+					</div>
+					<div class="form-group">
+						<label for="sell-price">Selling Price</label>
+						<input id="sell-price" type="number" name="itemsellprice" class="form-control col-md-12 col-lg-12 col-xs-12" placeholder="Selling price" aria-label=""
+							   aria-describedby="basic-addon1">
+					</div>
 
-				<div class="form-group text-center">
-					<input type="submit" value="Add" button class="btn btn-primary"
-							type="button" onclick="sumProfit()" />
-				</div>
-			</form>
+					<div class="form-group text-center">
+						<input type="submit" value="Add" button class="btn btn-primary"
+							   type="button" onclick="sumProfit()" />
+					</div>
+				</form>
+			</div>
 		</div>
 		<div class="text-center">
-			<button type="button" class="btn btn-primary btn-lg" id="add-item">Add Item</button>
+			<button type="button" class="btn btn-primary btn-lg" id="add-item" onclick="showAddItem()">Add Item</button>
 		</div>
 
 		<h2>Archived Items</h2>
@@ -162,9 +178,16 @@ function sumProfit() {
 	window.onload = sumProfit();
 </script>
 
+
+
 <script>
-$("#add-item").click(function() {  
-  $("#add-item-form").toggle("slow");
-  return false;
-});
+	function showAddItem() {
+		document.getElementById("overlay").style.display = "block";
+		document.getElementById("add-item-form").style.display = "block";
+	}
+
+	function hideAddItem() {
+		document.getElementById("overlay").style.display = "none";
+		document.getElementById("add-item-form").style.display = "none";
+	}
 </script>
