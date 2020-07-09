@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Todo App</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
 		  integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
@@ -16,7 +17,7 @@
 			integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
 			crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="main.css" />
 	<style>
 		#add-item-form {
@@ -42,6 +43,108 @@
 			cursor: pointer;
 		}
 
+		.more-btn,
+		.more-menu-btn {
+			background: none;
+			border: 0 none;
+			line-height: normal;
+			overflow: visible;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			width: 100%;
+			text-align: left;
+			outline: none;
+			cursor: pointer;
+		}
+
+		.more-dot {
+			background-color: #aab8c2;
+			margin: 0 auto;
+			display: inline-block;
+			width: 7px;
+			height: 7px;
+			margin-right: 1px;
+			border-radius: 50%;
+			transition: background-color 0.3s;
+		}
+
+		.more-menu {
+			position: absolute;
+			top: 100%;
+			z-index: 900;
+			float: left;
+			padding: 10px 0;
+			margin-top: 9px;
+			background-color: #fff;
+			border: 1px solid #ccd8e0;
+			border-radius: 4px;
+			box-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+			opacity: 0;
+			transform: translate(0, 15px) scale(.95);
+			transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+			pointer-events: none;
+		}
+
+		.more-menu-caret {
+			position: absolute;
+			top: -10px;
+			left: 12px;
+			width: 18px;
+			height: 10px;
+			float: left;
+			overflow: hidden;
+		}
+
+		.more-menu-caret-outer,
+		.more-menu-caret-inner {
+			position: absolute;
+			display: inline-block;
+			margin-left: -1px;
+			font-size: 0;
+			line-height: 1;
+		}
+
+		.more-menu-items {
+			margin: 0;
+			list-style: none;
+			padding: 0;
+		}
+
+		.more-menu-item {
+			display: block;
+		}
+
+		.more-menu-btn {
+			min-width: 100%;
+			color: #66757f;
+			cursor: pointer;
+			display: block;
+			font-size: 13px;
+			line-height: 18px;
+			padding: 5px 20px;
+			position: relative;
+			white-space: nowrap;
+		}
+
+		.more-menu-item:hover {
+			background-color: #489fe5;
+		}
+
+			.more-menu-item:hover .more-menu-btn {
+				color: #fff;
+			}
+
+		.more-btn:hover .more-dot,
+		.show-more-menu .more-dot {
+			background-color: #516471;
+		}
+
+		.show-more-menu .more-menu {
+			opacity: 1;
+			transform: translate(0, 0) scale(1);
+			pointer-events: auto;
+		}
 	</style>
 
 	<nav class="navbar navbar-dark bg-dark">
@@ -74,23 +177,40 @@
 						<th>Buy Price</th>
 						<th>Sell Price</th>
 						<th>Profit</th>
-						<th>Archive</th>
-						<th>Delete</th>
 					</tr>
 
 					{% for todo in incomplete %}
 					<tr>
-						<td>{{ todo.text }}</td>
+						<td>
+							{{ todo.text }}
+							<button id="more-btn" class="more-btn">
+								<span class="more-dot"></span>
+								<span class="more-dot"></span>
+								<span class="more-dot"></span>
+							</button>
+							<div class="more-menu">
+								<div class="more-menu-caret">
+									<div class="more-menu-caret-outer"></div>
+									<div class="more-menu-caret-inner"></div>
+								</div>
+								<ul class="more-menu-items" tabindex="-1" role="menu" aria-labelledby="more-btn" aria-hidden="true">
+									<li class="more-menu-item" role="presentation">
+										<button type="button" class="more-menu-btn" role="menuitem">Share</button>
+									</li>
+									<li class="more-menu-item" role="presentation">
+										<button type="button" class="more-menu-btn" role="menuitem">Copy</button>
+									</li>
+								</ul>
+							</div>
+							<i class="fa fa-bars" aria-hidden="true">
+								<a href="{{ url_for('complete', id=todo.id) }}" class="btn btn-success active" role="button" aria-pressed="true" onclick="sumProfit()">Archive</a>
+								<a href="{{ url_for('delete', id=todo.id) }}" class="btn btn-danger active" role="button" aria-pressed="true" onclick="sumProfit()">Remove</a>
+							</i>
+						</td>
 						<td>{{ todo.quantity }}</td>
 						<td>{{ todo.buy }}</td>
 						<td>{{ todo.sell}}</td>
 						<td class="profit"> {{ (todo.sell - todo.buy) * todo.quantity }}</td>
-						<td>
-							<a href="{{ url_for('complete', id=todo.id) }}" class="btn btn-success active" role="button" aria-pressed="true" onclick="sumProfit()">Archive</a>
-						</td>
-						<td>
-							<a href="{{ url_for('delete', id=todo.id) }}" class="btn btn-danger active" role="button" aria-pressed="true" onclick="sumProfit()">Delete</a>
-						</td>
 					</tr>
 					{% endfor %}
 				</table>
@@ -198,4 +318,35 @@ function sumProfit() {
 $( '#add-item-form' ).on( 'click', function( event ) {
     event.stopPropagation();
 });
+</script>
+
+<script>
+var el = document.querySelector('.more');
+var btn = el.querySelector('.more-btn');
+var menu = el.querySelector('.more-menu');
+var visible = false;
+
+function showMenu(e) {
+    e.preventDefault();
+    if (!visible) {
+        visible = true;
+        el.classList.add('show-more-menu');
+        menu.setAttribute('aria-hidden', false);
+        document.addEventListener('mousedown', hideMenu, false);
+    }
+}
+
+function hideMenu(e) {
+    if (btn.contains(e.target)) {
+        return;
+    }
+    if (visible) {
+        visible = false;
+        el.classList.remove('show-more-menu');
+        menu.setAttribute('aria-hidden', true);
+        document.removeEventListener('mousedown', hideMenu);
+    }
+}
+
+btn.addEventListener('click', showMenu, false);
 </script>
