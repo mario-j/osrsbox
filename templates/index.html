@@ -43,107 +43,8 @@
 			cursor: pointer;
 		}
 
-		.more-btn,
-		.more-menu-btn {
-			background: none;
-			border: 0 none;
-			line-height: normal;
-			overflow: visible;
-			-webkit-user-select: none;
-			-moz-user-select: none;
-			-ms-user-select: none;
-			width: 100%;
-			text-align: left;
-			outline: none;
+		.more-btn {
 			cursor: pointer;
-		}
-
-		.more-dot {
-			background-color: #aab8c2;
-			margin: 0 auto;
-			display: inline-block;
-			width: 7px;
-			height: 7px;
-			margin-right: 1px;
-			border-radius: 50%;
-			transition: background-color 0.3s;
-		}
-
-		.more-menu {
-			position: absolute;
-			top: 100%;
-			z-index: 900;
-			float: left;
-			padding: 10px 0;
-			margin-top: 9px;
-			background-color: #fff;
-			border: 1px solid #ccd8e0;
-			border-radius: 4px;
-			box-shadow: 1px 1px 3px rgba(0,0,0,0.25);
-			opacity: 0;
-			transform: translate(0, 15px) scale(.95);
-			transition: transform 0.1s ease-out, opacity 0.1s ease-out;
-			pointer-events: none;
-		}
-
-		.more-menu-caret {
-			position: absolute;
-			top: -10px;
-			left: 12px;
-			width: 18px;
-			height: 10px;
-			float: left;
-			overflow: hidden;
-		}
-
-		.more-menu-caret-outer,
-		.more-menu-caret-inner {
-			position: absolute;
-			display: inline-block;
-			margin-left: -1px;
-			font-size: 0;
-			line-height: 1;
-		}
-
-		.more-menu-items {
-			margin: 0;
-			list-style: none;
-			padding: 0;
-		}
-
-		.more-menu-item {
-			display: block;
-		}
-
-		.more-menu-btn {
-			min-width: 100%;
-			color: #66757f;
-			cursor: pointer;
-			display: block;
-			font-size: 13px;
-			line-height: 18px;
-			padding: 5px 20px;
-			position: relative;
-			white-space: nowrap;
-		}
-
-		.more-menu-item:hover {
-			background-color: #489fe5;
-		}
-
-			.more-menu-item:hover .more-menu-btn {
-				color: #fff;
-			}
-
-		.more-btn:hover .more-dot,
-		.show-more-menu .more-dot {
-			background-color: #516471;
-		}
-
-		.show-more-menu .more-menu {
-			opacity: 1;
-			transform: translate(0, 0) scale(1);
-			pointer-events: auto;
 		}
 	</style>
 
@@ -183,29 +84,15 @@
 					<tr>
 						<td>
 							{{ todo.text }}
-							<button id="more-btn" class="more-btn">
-								<span class="more-dot"></span>
-								<span class="more-dot"></span>
-								<span class="more-dot"></span>
-							</button>
-							<div class="more-menu">
-								<div class="more-menu-caret">
-									<div class="more-menu-caret-outer"></div>
-									<div class="more-menu-caret-inner"></div>
-								</div>
-								<ul class="more-menu-items" tabindex="-1" role="menu" aria-labelledby="more-btn" aria-hidden="true">
-									<li class="more-menu-item" role="presentation">
-										<button type="button" class="more-menu-btn" role="menuitem">Share</button>
-									</li>
-									<li class="more-menu-item" role="presentation">
-										<button type="button" class="more-menu-btn" role="menuitem">Copy</button>
-									</li>
+							<span class="dropdown">
+								<i id="menu1" class="fa fa-bars more-btn" data-toggle="dropdown" aria-hidden="true"></i>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+									<li role="presentation"><a href="{{ url_for('delete', id=todo.id) }}" class="active" role="menuitem" aria-pressed="true" tabindex="-1" onclick="sumProfit()">Remove</a></li>
+									<li role="presentation"><a href="{{ url_for('complete', id=todo.id) }}" class="active" role="menuitem" aria-pressed="true" tabindex="-1" onclick="sumProfit()">Archive</a></li>
 								</ul>
-							</div>
-							<i class="fa fa-bars" aria-hidden="true">
-								<a href="{{ url_for('complete', id=todo.id) }}" class="btn btn-success active" role="button" aria-pressed="true" onclick="sumProfit()">Archive</a>
-								<a href="{{ url_for('delete', id=todo.id) }}" class="btn btn-danger active" role="button" aria-pressed="true" onclick="sumProfit()">Remove</a>
-							</i>
+							</span>
+							
+							
 						</td>
 						<td>{{ todo.quantity }}</td>
 						<td>{{ todo.buy }}</td>
