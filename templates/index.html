@@ -18,6 +18,8 @@
 			crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="main.css" />
 	<style>
 		#add-item-form {
@@ -46,8 +48,12 @@
 		.more-btn {
 			cursor: pointer;
 		}
+
 	</style>
 
+
+</head>
+<body>
 	<nav class="navbar navbar-dark bg-dark">
 		<a class="navbar-brand" href="{{ url_for('index') }}">Home</a>
 		<form class="form-inline" action="{{ url_for('search') }}" method="POST">
@@ -55,9 +61,6 @@
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 		</form>
 	</nav>
-</head>
-<body>
-
 	<div class="container">
 		<h1 class="text-center">Margin Calculator</h1>
 
@@ -83,16 +86,22 @@
 					{% for todo in incomplete %}
 					<tr>
 						<td>
-							{{ todo.text }}
 							<span class="dropdown">
-								<i id="menu1" class="fa fa-bars more-btn" data-toggle="dropdown" aria-hidden="true"></i>
-								<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-									<li role="presentation"><a href="{{ url_for('delete', id=todo.id) }}" class="active" role="menuitem" aria-pressed="true" tabindex="-1" onclick="sumProfit()">Remove</a></li>
-									<li role="presentation"><a href="{{ url_for('complete', id=todo.id) }}" class="active" role="menuitem" aria-pressed="true" tabindex="-1" onclick="sumProfit()">Archive</a></li>
+								{{ todo.text }}
+								<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+									<i class="fa fa-bars more-btn" aria-hidden="true"></i>
+								</button>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="{{ url_for('delete', id=todo.id) }}" class="active" role="menuitem" aria-pressed="true" tabindex="-1" onclick="sumProfit()">Remove</a>
+									</li>
+									<li>
+										<a href="{{ url_for('complete', id=todo.id) }}" class="active" role="menuitem" aria-pressed="true" tabindex="-1" onclick="sumProfit()">Archive</a>
+									</li>
 								</ul>
 							</span>
-							
-							
+
+
 						</td>
 						<td>{{ todo.quantity }}</td>
 						<td>{{ todo.buy }}</td>
@@ -147,7 +156,7 @@
 			{% for todo in complete %}
 			<li class="list-group-item disabled" style="font-size: 30pt">
 				{{ todo.text }} <a href="{{ url_for('delete', id=todo.id) }}" class="btn btn-danger active" role="button"
-					aria-pressed="true" onclick="sumProfit()">Delete</a>
+					   aria-pressed="true" onclick="sumProfit()">Delete</a>
 			</li></li>
 			{% endfor %}
 		</ul>
@@ -207,33 +216,3 @@ $( '#add-item-form' ).on( 'click', function( event ) {
 });
 </script>
 
-<script>
-var el = document.querySelector('.more');
-var btn = el.querySelector('.more-btn');
-var menu = el.querySelector('.more-menu');
-var visible = false;
-
-function showMenu(e) {
-    e.preventDefault();
-    if (!visible) {
-        visible = true;
-        el.classList.add('show-more-menu');
-        menu.setAttribute('aria-hidden', false);
-        document.addEventListener('mousedown', hideMenu, false);
-    }
-}
-
-function hideMenu(e) {
-    if (btn.contains(e.target)) {
-        return;
-    }
-    if (visible) {
-        visible = false;
-        el.classList.remove('show-more-menu');
-        menu.setAttribute('aria-hidden', true);
-        document.removeEventListener('mousedown', hideMenu);
-    }
-}
-
-btn.addEventListener('click', showMenu, false);
-</script>
