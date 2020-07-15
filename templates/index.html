@@ -123,17 +123,17 @@
 						</div>
 						<div class="form-group">
 							<label for="quantity">Quantity</label>
-							<input id="quantity" type="text" data-type="number" name="itemquantity" class="form-control col-md-12 col-lg-12 col-xs-12" placeholder="Number of Items" aria-label=""
+							<input id="quantity" type="number" name="itemquantity" class="form-control col-md-12 col-lg-12 col-xs-12" placeholder="Number of Items" aria-label=""
 								   aria-describedby="basic-addon1">
 						</div>
 						<div class="form-group">
 							<label for="buy-price">Buying Price</label>
-							<input id="buy-price" type="text" data-type="number" name="itembuyprice" class="form-control col-md-12 col-lg-12 col-xs-12" placeholder="Buying Price" aria-label=""
+							<input id="buy-price" type="number" name="itembuyprice" class="form-control col-md-12 col-lg-12 col-xs-12" placeholder="Buying Price" aria-label=""
 								   aria-describedby="basic-addon1">
 						</div>
 						<div class="form-group">
 							<label for="sell-price">Selling Price</label>
-							<input id="sell-price" type="text" data-type="number" name="itemsellprice" class="form-control col-md-12 col-lg-12 col-xs-12" placeholder="Selling price" aria-label=""
+							<input id="sell-price" type="number" name="itemsellprice" class="form-control col-md-12 col-lg-12 col-xs-12" placeholder="Selling price" aria-label=""
 								   aria-describedby="basic-addon1">
 						</div>
 
@@ -213,18 +213,4 @@ $( '#add-item-form' ).on( 'click', function( event ) {
 </script>
 
 <script>
-	$(document).ready(function(){
-    $("input[data-type='number']").keyup(function(event){
-      // skip for arrow keys
-      if(event.which >= 37 && event.which <= 40){
-          event.preventDefault();
-      }
-      var $this = $(this);
-      var num = $this.val().replace(/,/gi, "");
-      var num2 = num.split(/(?=(?:\d{3})+$)/).join(",");
-      console.log(num2);
-      // the following line has been simplified. Revision history contains original.
-      $this.val(num2);
-  });
-});
 </script>
