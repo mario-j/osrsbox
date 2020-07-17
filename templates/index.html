@@ -150,12 +150,39 @@
 
 		<h2>Archived Items</h2>
 		<ul class="list-group">
-			{% for todo in complete %}
-			<li class="list-group-item disabled" style="font-size: 30pt">
-				{{ todo.text }} <a href="{{ url_for('delete', id=todo.id) }}" class="btn btn-danger active" role="button"
-					   aria-pressed="true" onclick="sumProfit()">Delete</a>
-			</li></li>
-			{% endfor %}
+			<table>
+				<tr>
+					<th>Item</th>
+					<th>Quantity</th>
+					<th>Buy Price</th>
+					<th>Sell Price</th>
+					<th>Profit</th>
+				</tr>
+
+				{% for todo in complete %}
+				<tr>
+					<td>
+						<span class="dropdown">
+							{{ todo.text }}
+							<button class="btn btn-small btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown">
+								<i class="fa fa-bars more-btn" aria-hidden="true"></i>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="{{ url_for('delete', id=todo.id) }}" class="active" role="menuitem" aria-pressed="true" tabindex="-1" onclick="sumProfit()">Remove</a>
+								</li>
+							</ul>
+						</span>
+
+
+					</td>
+					<td>{{ todo.quantity }}</td>
+					<td>{{ todo.buy }}</td>
+					<td>{{ todo.sell}}</td>
+					<td class="profit"> {{ (todo.sell - todo.buy) * todo.quantity }}</td>
+				</tr>
+				{% endfor %}
+			</table>
 		</ul>
 	</div>
 </body>
