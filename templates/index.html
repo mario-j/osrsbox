@@ -150,7 +150,7 @@
 
 		<h2>Archived Items</h2>
 		<ul class="list-group">
-			<table>
+			<table class="table table-striped">
 				<tr>
 					<th>Item</th>
 					<th>Quantity</th>
@@ -179,7 +179,7 @@
 					<td>{{ todo.quantity }}</td>
 					<td>{{ todo.buy }}</td>
 					<td>{{ todo.sell}}</td>
-					<td class="profit"> {{ (todo.sell - todo.buy) * todo.quantity }}</td>
+					<td> {{ (todo.sell - todo.buy) * todo.quantity }}</td>
 				</tr>
 				{% endfor %}
 			</table>
