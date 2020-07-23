@@ -36,7 +36,3 @@ function hideAddItem() {
 	document.getElementById("overlay").style.display = "none";
 	document.getElementById("add-item-form").style.display = "none";
 }
-
-$( '#add-item-form' ).on( 'click', function( event ) {
-    event.stopPropagation();
-});
