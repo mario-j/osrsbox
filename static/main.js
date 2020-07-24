@@ -36,3 +36,7 @@ function hideAddItem() {
 	document.getElementById("overlay").style.display = "none";
 	document.getElementById("add-item-form").style.display = "none";
 }
+
+$(document).ready(function() {
+    $('#data-table').DataTable();
+} );

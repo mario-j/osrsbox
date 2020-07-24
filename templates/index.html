@@ -20,6 +20,8 @@
 			crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="{{ url_for('static', filename='main.js') }}"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 </head>
 <body onload="sumProfit()">
 	<nav class="navbar navbar-dark bg-dark">
@@ -44,41 +46,54 @@
 
 		<div>
 			<ul class="list-group">
-				<table class="table table-striped">
-					<tr>
-						<th>Item</th>
-						<th>Quantity</th>
-						<th>Buy Price</th>
-						<th>Sell Price</th>
-						<th>Profit</th>
-					</tr>
+				<table class="table table-striped" id="data-table">
+					<thead>
+						<tr>
+							<th>
+								Item
+							</th>
+							<th>
+								Quantity
+							</th>
+							<th>
+								Buy Price
+							</th>
+							<th>
+								Sell Price
+							</th>
+							<th>
+								Profit
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for todo in incomplete %}
+						<tr>
+							<td>
+								<span class="dropdown">
+									{{ todo.text }}
+									<button class="btn btn-small btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown">
+										<i class="fa fa-bars more-btn" aria-hidden="true"></i>
+									</button>
+									<ul class="dropdown-menu">
+										<li>
+											<a href="{{ url_for('delete', id=todo.id) }}" class="active" role="menuitem" aria-pressed="true" tabindex="-1" onclick="sumProfit()">Remove</a>
+										</li>
+										<li>
+											<a href="{{ url_for('complete', id=todo.id) }}" class="active" role="menuitem" aria-pressed="true" tabindex="-1" onclick="sumProfit()">Archive</a>
+										</li>
+									</ul>
+								</span>
 
-					{% for todo in incomplete %}
-					<tr>
-						<td>
-							<span class="dropdown">
-								{{ todo.text }}
-								<button class="btn btn-small btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown">
-									<i class="fa fa-bars more-btn" aria-hidden="true"></i>
-								</button>
-								<ul class="dropdown-menu">
-									<li>
-										<a href="{{ url_for('delete', id=todo.id) }}" class="active" role="menuitem" aria-pressed="true" tabindex="-1" onclick="sumProfit()">Remove</a>
-									</li>
-									<li>
-										<a href="{{ url_for('complete', id=todo.id) }}" class="active" role="menuitem" aria-pressed="true" tabindex="-1" onclick="sumProfit()">Archive</a>
-									</li>
-								</ul>
-							</span>
 
-
-						</td>
-						<td>{{ todo.quantity }}</td>
-						<td>{{ todo.buy }}</td>
-						<td>{{ todo.sell}}</td>
-						<td class="profit"> {{ (todo.sell - todo.buy) * todo.quantity }}</td>
-					</tr>
-					{% endfor %}
+							</td>
+							<td>{{ todo.quantity }}</td>
+							<td>{{ todo.buy }}</td>
+							<td>{{ todo.sell}}</td>
+							<td class="profit"> {{ (todo.sell - todo.buy) * todo.quantity }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
 				</table>
 			</ul>
 		</div>
