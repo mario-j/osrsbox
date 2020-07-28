@@ -48,7 +48,7 @@
 
 		<div>
 			<ul class="list-group">
-				<table class="table table-striped" id="data-table">
+				<table class="table-striped table" id="data-table">
 					<thead>
 						<tr>
 							<th>
@@ -140,38 +140,42 @@
 
 		<h2>Archived Items</h2>
 		<ul class="list-group">
-			<table class="table table-striped">
-				<tr>
-					<th>Item</th>
-					<th>Quantity</th>
-					<th>Buy Price</th>
-					<th>Sell Price</th>
-					<th>Profit</th>
-				</tr>
+			<table class="table table-striped" id="data-table-archive">
+				<thead>
+					<tr>
+						<th>Item</th>
+						<th>Quantity</th>
+						<th>Buy Price</th>
+						<th>Sell Price</th>
+						<th>Profit</th>
+					</tr>
+				</thead>
 
-				{% for todo in complete %}
-				<tr>
-					<td>
-						<span class="dropdown">
-							{{ todo.text }}
-							<button class="btn btn-small btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown">
-								<i class="fa fa-bars more-btn" aria-hidden="true"></i>
-							</button>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="{{ url_for('delete', id=todo.id) }}" class="active" role="menuitem" aria-pressed="true" tabindex="-1" onclick="sumProfit()">Remove</a>
-								</li>
-							</ul>
-						</span>
+				<tbody>
+					{% for todo in complete %}
+					<tr>
+						<td>
+							<span class="dropdown">
+								{{ todo.text }}
+								<button class="btn btn-small btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown">
+									<i class="fa fa-bars more-btn" aria-hidden="true"></i>
+								</button>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="{{ url_for('delete', id=todo.id) }}" class="active" role="menuitem" aria-pressed="true" tabindex="-1" onclick="sumProfit()">Remove</a>
+									</li>
+								</ul>
+							</span>
 
 
-					</td>
-					<td>{{ todo.quantity }}</td>
-					<td>{{ todo.buy }}</td>
-					<td>{{ todo.sell}}</td>
-					<td> {{ (todo.sell - todo.buy) * todo.quantity }}</td>
-				</tr>
-				{% endfor %}
+						</td>
+						<td>{{ todo.quantity }}</td>
+						<td>{{ todo.buy }}</td>
+						<td>{{ todo.sell}}</td>
+						<td> {{ (todo.sell - todo.buy) * todo.quantity }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
 			</table>
 		</ul>
 	</div>
@@ -185,5 +189,7 @@ $( '#add-item-form' ).on( 'click', function( event ) {
 
 $(document).ready( function () {
     $('#data-table').DataTable();
+    $('#data-table-archive').DataTable();
 } );
+
 </script>

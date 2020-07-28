@@ -24,3 +24,7 @@
 .more-btn {
 	cursor: pointer;
 }
+
+thead {
+	border-top: solid thick;
+}
