@@ -3,8 +3,10 @@
     "",
     "\\db",
     "\\Relationship",
+    "\\static",
+    "\\static\\styles",
     "\\templates"
   ],
-  "SelectedNode": "\\Procfile",
+  "SelectedNode": "\\templates\\index.html",
   "PreviewInSolutionExplorer": false
 }
