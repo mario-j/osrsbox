@@ -19,6 +19,8 @@ manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
 login_manager = LoginManager()
+login_manager.init_app(app)
+app.secret_key=b'DD}?\x80\xbc\xb3>\xfc\x80\xc7\xff_\xf0\r\xab'
 
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
