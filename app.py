@@ -22,6 +22,10 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 app.secret_key=b'DD}?\x80\xbc\xb3>\xfc\x80\xc7\xff_\xf0\r\xab'
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
+
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(200))
