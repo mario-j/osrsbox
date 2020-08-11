@@ -1,7 +1,6 @@
   
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy 
-from flask_login import LoginManager
 
 from flask_script import Manager
 from flask_migrate import ( Migrate, MigrateCommand )
@@ -17,14 +16,16 @@ migrate = Migrate(app, db)
 manager = Manager(app)
 
 manager.add_command('db', MigrateCommand)
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-app.secret_key=b'DD}?\x80\xbc\xb3>\xfc\x80\xc7\xff_\xf0\r\xab'
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.get(user_id)
+# Route for handling the login page logic
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            error = 'Invalid Credentials. Please try again.'
+        else:
+            return redirect(url_for('home'))
+    return render_template('login.html', error=error)
 
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
